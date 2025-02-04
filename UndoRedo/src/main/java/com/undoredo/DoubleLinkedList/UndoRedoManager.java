@@ -54,9 +54,14 @@ public class UndoRedoManager<T> {
         }
     }
 
-    // Redo Operation
+    // Performs a redo operation, moving the current state pointer to the next state
     public T redo(){
-        //implement me
+        if (currentState != null && currentState.next != null) {
+            currentState = currentState.next;
+            return currentState.state;
+        }
+        System.out.println("No next state to redo.");
+        return currentState != null ? currentState.state : null;
     }
 
     public static void main(String[] args) {
