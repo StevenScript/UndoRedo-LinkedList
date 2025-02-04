@@ -64,9 +64,36 @@ public class UndoRedoManager<T> {
         return currentState != null ? currentState.state : null;
     }
 
+    /**
+     * Main method to test the Undo/Redo functionality.
+     */
     public static void main(String[] args) {
+        // Create an UndoRedoManager for String states.
+        UndoRedoManager<String> manager = new UndoRedoManager<>();
 
+        // Add states 1 through 5.
+        manager.addState("1");
+        manager.addState("2");
+        manager.addState("3");
+        manager.addState("4");
+        manager.addState("5");
 
+        // Print current state (5)
+        System.out.println("Current state: " + manager.currentState.state);
+
+        // Undo twice (expected: from 5 -> 4, then 3)
+        System.out.println("Undo: " + manager.undo()); // Expected "4"
+        System.out.println("Undo: " + manager.undo()); // Expected "3"
+
+        // Redo once (move from 3 -> 4)
+        System.out.println("Redo: " + manager.redo()); // Expected "4"
+
+        // Add a 6 state (should discard any redo)
+        manager.addState("6");
+        System.out.println("After adding new state, current: " + manager.currentState.state); // Expected "6"
+
+        // Attempt redo
+        System.out.println("Redo: " + manager.redo()); // Expected message and state "6"
     }
 }
 
