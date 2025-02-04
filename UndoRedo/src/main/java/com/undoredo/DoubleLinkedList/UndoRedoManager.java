@@ -28,10 +28,24 @@ public class UndoRedoManager<T> {
         //implement me
     }
 
-    // perform an operation
-    public void  addState (T newState) {
-        //implement me
-
+    /**
+     * Performs an operation by adding a new state to the chain.
+     * Any redo states (future states) are discarded.
+     */
+    public void addState(T newState) {
+        Node newNode = new Node(newState);
+        if (currentState == null) {
+            // This becomes the first state.
+            currentState = newNode;
+        } else {
+            // Discard any redo states.
+            currentState.next = null;
+            // Link the new node after the current state.
+            newNode.prev = currentState;
+            currentState.next = newNode;
+            // Update the current state pointer.
+            currentState = newNode;
+        }
     }
 
     // Redo Operation
