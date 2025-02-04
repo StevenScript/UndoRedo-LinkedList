@@ -23,9 +23,15 @@ public class UndoRedoManager<T> {
 
     // Pointer to the current state in the list.
     private Node currentState;
-    // Undo operation
+
+    // Performs an undo operation, moving the current state pointer to the previous state.
     public T undo() {
-        //implement me
+        if (currentState != null && currentState.prev != null) {
+            currentState = currentState.prev;
+            return currentState.state;
+        }
+        System.out.println("No previous state to undo.");
+        return currentState != null ? currentState.state : null;
     }
 
     /**
